@@ -6,13 +6,14 @@ const initialState: IParams = {
   search: "",
   template: "",
   fontSize: 24,
-  categories: {
-    Serif: true,
-    "Sans Serif": true,
-    Monospace: true,
-    Handwriting: true,
-    Display: true,
-  },
+  // categories: {
+  //   Serif: true,
+  //   "Sans Serif": true,
+  //   Monospace: true,
+  //   Handwriting: true,
+  //   Display: true,
+  // },
+  categories: ["Serif", "Sans Serif", "Monospace", "Handwriting", "Display"],
   language: "All languages",
   onlyVariable: false,
   sort: "trending",
@@ -36,11 +37,13 @@ const paramsSlice = createSlice({
     setFontSize: (state, action: PayloadAction<number>) => {
       state.fontSize = action.payload;
     },
-    toggleCategories: (state, action: PayloadAction<TCategory>) => {
-      state.categories = {
-        ...state.categories,
-        [action.payload]: !state.categories[action.payload],
-      };
+    toggleCategories: (state, action: PayloadAction<TCategory[]>) => {
+      // state.categories = {
+      //   ...state.categories,
+      //   [action.payload]: !state.categories[action.payload],
+      // };
+
+      state.categories = [...action.payload];
     },
     setLanguage: (state, action: PayloadAction<string>) => {
       state.language = action.payload;

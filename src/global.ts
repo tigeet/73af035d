@@ -190,6 +190,14 @@ const LANGUAGES = [
 //   "Vietnamese",
 // ];
 
+const CATEGORIES = [
+  "Serif",
+  "Sans Serif",
+  "Display",
+  "Handwriting",
+  "Monospace",
+];
+
 const META_URL = "https://fonts.google.com/metadata/fonts";
 
-export { LANGUAGES };
+export { LANGUAGES, CATEGORIES };

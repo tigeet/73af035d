@@ -1,3 +1,5 @@
+import { TCategory } from "./params";
+
 interface IThickness {
   [thickness: string]: {
     thickness: null | number;
@@ -11,7 +13,7 @@ interface IFont {
   id: number;
   family: string;
   subsets: string[];
-  category: string;
+  category: TCategory;
   fonts: IThickness;
   designers: string[];
   popularity: number;

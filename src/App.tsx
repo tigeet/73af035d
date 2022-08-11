@@ -1,4 +1,4 @@
-import Controls from "components/controls";
+import Controls from "components/controlComponents/controls";
 import FontsPage from "components/fontsPage";
 
 function App() {

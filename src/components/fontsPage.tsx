@@ -10,40 +10,6 @@ import { TDisplayType } from "types/params";
 
 import FontElement from "./fontElement";
 
-const FontsGrid = styled.div<{ display: TDisplayType }>`
-  display: grid;
-  width: 100%;
-  justify-content: center;
-  /* grid-auto-rows: 250px; */
-  gap: 8px;
-  grid-template-columns: ${(props) => {
-    switch (props.display) {
-      case "block":
-        return "1fr";
-      case "grid":
-        return "repeat(auto-fit, minmax(330px, 1fr))";
-    }
-  }};
-`;
-
-const Container = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-
-  .center-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    padding: 12px;
-    width: 100%;
-    max-width: 1100px;
-    height: 100%;
-  }
-`;
-
 function FontsPage() {
   const dispatch = useAppDispatch();
   const meta = useAppSelector(getFontsMeta);
@@ -61,14 +27,36 @@ function FontsPage() {
   }, [searchParams.categories, searchParams.language, searchParams.search]);
 
   useEffect(() => {
-    const _fonts = meta.filter(
-      (font) =>
-        font.subsets?.includes(searchParams.language) ||
-        searchParams.language === "All languages"
-    );
+    const _fonts = meta
+      .filter(
+        (font) =>
+          font.subsets?.includes(searchParams.language) ||
+          searchParams.language === "All languages"
+      )
+      .filter((font) => searchParams.categories.includes(font.category))
+      .filter(
+        (font) =>
+          font.family
+            .toLocaleLowerCase()
+            .includes(searchParams.search.toLocaleLowerCase()) ||
+          font.designers.reduce(
+            (x, y) =>
+              x ||
+              y
+                .toLocaleLowerCase()
+                .includes(searchParams.search.toLocaleLowerCase()),
+            false
+          )
+      );
 
     setFonts(_fonts);
-  }, [searchParams, meta]);
+    console.log("render");
+  }, [
+    searchParams.categories,
+    searchParams.language,
+    searchParams.search,
+    meta,
+  ]);
 
   return (
     <Container>
@@ -94,3 +82,37 @@ function FontsPage() {
 }
 
 export default FontsPage;
+
+const FontsGrid = styled.div<{ display: TDisplayType }>`
+  display: grid;
+  width: 100%;
+  justify-content: center;
+  /* grid-auto-rows: 250px; */
+  gap: 12px;
+  grid-template-columns: ${(props) => {
+    switch (props.display) {
+      case "block":
+        return "1fr";
+      case "grid":
+        return "repeat(auto-fit, minmax(400px, 1fr))";
+    }
+  }};
+`;
+
+const Container = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+
+  .center-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    width: 100%;
+    max-width: 1400px;
+    height: 100%;
+  }
+`;

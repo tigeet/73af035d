@@ -1,13 +1,31 @@
-import { spawn } from "child_process";
 import useFont from "fontLoader";
 import { useEffect } from "react";
 import styled from "styled-components";
 import { IFont } from "types/meta";
 import { IParams } from "types/params";
-import { JsxElement } from "typescript";
 
 function numberFormatter(amount: number): string {
   return amount + " " + (amount === 1 ? "style" : "styles");
+}
+
+function designersFormatter(designers: string[]) {
+  if (designers.length < 3)
+    return (
+      <>
+        {"by "}
+        <span className="selected">{designers.join(", ")}</span>
+      </>
+    );
+
+  return (
+    <>
+      {"by "}
+      <span className="selected">{designers.slice(0, 2).join(", ")}</span>
+      <span title={designers.join(", ")}>{` and ${
+        designers.length - 2
+      } more`}</span>
+    </>
+  );
 }
 
 function tagsFormatter(tags: string[]): JSX.Element {
@@ -48,7 +66,7 @@ const FontElement = ({
         </div>
 
         <span className="font-designers">
-          by <span className="selected">{font.designers.join(", ")}</span>
+          {designersFormatter(font.designers)}
         </span>
       </div>
 
@@ -67,12 +85,21 @@ const FontElement = ({
 
 export default FontElement;
 
-const FontPreview = styled.div<{ font: string; fontSize: number }>`
-  font-family: ${(props) => props.font};
-  font-size: ${(props) => props.fontSize}px;
+interface IProps {
+  font: string;
+  fontSize: number;
+}
+const FontPreview = styled.div.attrs<IProps>(({ font, fontSize }: IProps) => ({
+  style: {
+    fontFamily: font,
+    fontSize: fontSize + "px",
+  },
+}))<IProps>`
+  word-wrap: break-word;
   flex-grow: 1;
   height: fit-content;
   width: 100%;
+  font-weight: bold;
 `;
 
 const Container = styled.div`
@@ -82,7 +109,7 @@ const Container = styled.div`
   border-radius: 6px;
   font-family: "Roboto";
   font-size: 16px;
-  gap: 24px;
+  gap: 16px;
 
   border: 1px solid #d6dbd958;
 
