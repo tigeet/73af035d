@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "hooks";
 import { getFontsState } from "selectors/selectors";
-import { submitFont, submitFonts } from "slices/fontState";
+import { submitFont, submitFonts } from "slices/loading";
 
 const WebFont = require("webfontloader");
 // pass list of font id's

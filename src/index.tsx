@@ -2,6 +2,7 @@ import App from "App";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 import store from "store/store";
 import { createGlobalStyle } from "styled-components";
 
@@ -16,6 +17,12 @@ const GlobalStyles = createGlobalStyle`
     font-size: 16px;
     font-family: 'Nunito';
     box-sizing: border-box;
+    text-decoration: none;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
   }
 
   .selected {
@@ -26,8 +33,10 @@ const GlobalStyles = createGlobalStyle`
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <GlobalStyles />
-      <App />
+      <BrowserRouter>
+        <GlobalStyles />
+        <App />
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );

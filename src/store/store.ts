@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import metaReducer from "slices/meta";
 import paramsReducer from "slices/params";
-import fontStateReducer from "slices/fontState";
+import fontStateReducer from "slices/loading";
 const rootReducer = combineReducers({
   meta: metaReducer,
   params: paramsReducer,

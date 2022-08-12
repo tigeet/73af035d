@@ -3,42 +3,9 @@ import { useEffect } from "react";
 import styled from "styled-components";
 import { IFont } from "types/meta";
 import { IParams } from "types/params";
+import { designersFormatter, numberFormatter } from "utils";
 
-function numberFormatter(amount: number): string {
-  return amount + " " + (amount === 1 ? "style" : "styles");
-}
-
-function designersFormatter(designers: string[]) {
-  if (designers.length < 3)
-    return (
-      <>
-        {"by "}
-        <span className="selected">{designers.join(", ")}</span>
-      </>
-    );
-
-  return (
-    <>
-      {"by "}
-      <span className="selected">{designers.slice(0, 2).join(", ")}</span>
-      <span title={designers.join(", ")}>{` and ${
-        designers.length - 2
-      } more`}</span>
-    </>
-  );
-}
-
-function tagsFormatter(tags: string[]): JSX.Element {
-  if (tags.length < 4)
-    return <span className="selected">{tags.join(", ")}</span>;
-
-  return (
-    <>
-      <span className="selected">{tags.slice(0, 3).join(", ")}</span>
-      <span title={tags.join(", ")}>{` and ${tags.length - 3} more`}</span>
-    </>
-  );
-}
+import FontPreview from "./fontComponents/fontPreview";
 
 // show a link to corresponding file
 const FontElement = ({
@@ -71,12 +38,10 @@ const FontElement = ({
       </div>
 
       <FontPreview
-        className="font-preview"
-        font={font.family}
+        fontFamily={font.family}
         fontSize={searchParams.fontSize}
-      >
-        {searchParams.template || "The quick brown fox jumps over the lazy dog"}
-      </FontPreview>
+        value={searchParams.template}
+      />
 
       {/* <div className="tags">{tagsFormatter(font.subsets)}</div> */}
     </Container>
@@ -84,23 +49,6 @@ const FontElement = ({
 };
 
 export default FontElement;
-
-interface IProps {
-  font: string;
-  fontSize: number;
-}
-const FontPreview = styled.div.attrs<IProps>(({ font, fontSize }: IProps) => ({
-  style: {
-    fontFamily: font,
-    fontSize: fontSize + "px",
-  },
-}))<IProps>`
-  word-wrap: break-word;
-  flex-grow: 1;
-  height: fit-content;
-  width: 100%;
-  font-weight: bold;
-`;
 
 const Container = styled.div`
   display: flex;
@@ -110,6 +58,8 @@ const Container = styled.div`
   font-family: "Roboto";
   font-size: 16px;
   gap: 16px;
+  height: 100%;
+  width: 100%;
 
   border: 1px solid #d6dbd958;
 

@@ -1,11 +1,14 @@
-import Controls from "components/controlComponents/controls";
-import FontsPage from "components/fontsPage";
+import FontPage from "pages/fontPage";
+import GridPage from "pages/gridPage";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   return (
     <>
-      <Controls />
-      <FontsPage />
+      <Routes>
+        <Route path="/" element={<GridPage />} />
+        <Route path="/:id" element={<FontPage />} />
+      </Routes>
     </>
   );
 }
