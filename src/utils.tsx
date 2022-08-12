@@ -51,6 +51,10 @@ function parseWeight(s: string) {
   if (weight === 800) type = "ExtraBold";
   if (weight >= 900) type = "Black";
 
-  return `${type} ${weight} ${isItalic ? "Italic" : ""}`;
+  return {
+    value: `${type} ${weight} ${isItalic ? "Italic" : ""}`,
+    weight,
+    isItalic,
+  };
 }
 export { tagsFormatter, numberFormatter, designersFormatter, parseWeight };

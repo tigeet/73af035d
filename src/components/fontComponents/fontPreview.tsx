@@ -8,6 +8,7 @@ interface IProps {
   fontSize: number;
   fontWeight?: number;
   nowrap?: boolean;
+  isItalic?: boolean;
 }
 
 const FontPreview = ({
@@ -16,6 +17,7 @@ const FontPreview = ({
   fontSize,
   fontWeight,
   nowrap,
+  isItalic,
 }: IProps) => {
   return (
     <Container
@@ -23,6 +25,7 @@ const FontPreview = ({
       fontSize={fontSize}
       fontWeight={fontWeight}
       nowrap={nowrap}
+      isItalic={isItalic}
     >
       {value || "The quick brown fox jumps over the lazy dog"}
     </Container>
@@ -36,14 +39,16 @@ interface SProps {
   fontSize: number;
   fontWeight?: number;
   nowrap?: boolean;
+  isItalic?: boolean;
 }
 const Container = styled.div.attrs<SProps>(
-  ({ font, fontSize, fontWeight, nowrap }: SProps) => ({
+  ({ font, fontSize, fontWeight, nowrap, isItalic }: SProps) => ({
     style: {
       fontFamily: font,
       fontSize: fontSize + "px",
       fontWeight: fontWeight ?? "normal",
       whiteSpace: nowrap ? "pre" : "unset",
+      fontStyle: isItalic ? "italic" : "normal",
     },
   })
 )<SProps>`

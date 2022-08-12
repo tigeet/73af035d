@@ -11,9 +11,14 @@ import { CATEGORIES } from "global";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { getParams } from "selectors/selectors";
 import { toggleCategories } from "slices/params";
+import styled from "styled-components";
 import { TCategory } from "types/params";
 
-const Categories = () => {
+interface IProps {
+  width?: number;
+}
+
+const Categories = ({ width }: IProps) => {
   const { categories } = useAppSelector(getParams);
   const dispatch = useAppDispatch();
 
@@ -24,9 +29,9 @@ const Categories = () => {
   }
 
   return (
-    <>
+    <Container width={width}>
       <Select
-        sx={{ height: "fit-content" }}
+        sx={{ height: "fit-content", width: "100%" }}
         multiple
         variant="standard"
         value={categories}
@@ -42,8 +47,19 @@ const Categories = () => {
           </MenuItem>
         ))}
       </Select>
-    </>
+    </Container>
   );
 };
 
 export default Categories;
+
+interface SProps {
+  width?: number;
+}
+
+const Container = styled.div<SProps>`
+  width: ${(props) => (props.width ? props.width + "px" : "100%")};
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+`;

@@ -49,6 +49,7 @@ const Size = ({ size, defaultValue, max, width }: IProps) => {
       </div>
       <Slider
         size={size || "small"}
+        sx={{ width: "100%", padding: 0 }}
         defaultValue={defaultValue}
         min={0}
         max={max}
@@ -67,7 +68,11 @@ const Container = styled.div<{ width?: number }>`
   align-items: center;
   height: 32px;
   /* gap: 24px; */
-  width: ${(props) => (props.width ? `${props.width}px` : "100%")};
+  width: ${(props) => (props.width ? props.width + "px" : "100%")};
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 
   .size-input {
     display: flex;

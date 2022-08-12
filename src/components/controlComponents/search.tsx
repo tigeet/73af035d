@@ -15,10 +15,10 @@ import styled from "styled-components";
 
 // edit props
 interface IProps {
-  type: "";
+  width?: number;
 }
-
-const Search = () => {
+// add width prop
+const Search = ({ width }: IProps) => {
   const dispatch = useAppDispatch();
   const globalSearch = useAppSelector(getParams).search;
   const [localSearch, setLocalSearch] = useState<string>(globalSearch);
@@ -33,8 +33,9 @@ const Search = () => {
     dispatch(setSearch(deferredSearch));
   }, [deferredSearch, dispatch]);
   return (
-    <Container>
+    <Container width={width}>
       <TextField
+        sx={{ width: "100%" }}
         id="search"
         variant="standard"
         placeholder="Search"
@@ -61,4 +62,19 @@ const Search = () => {
 
 export default Search;
 
-const Container = styled.div``;
+interface SProps {
+  width?: number;
+}
+
+// .attrs(({ width }: SProps) => ({
+//   style: {
+//     width: width ?? "100%",
+//   },
+// }))
+
+const Container = styled.div<SProps>`
+  width: ${(props) => (props.width ? props.width + "px" : "100%")};
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+`;

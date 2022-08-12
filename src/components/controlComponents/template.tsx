@@ -14,10 +14,10 @@ import styled from "styled-components";
 
 // edit props
 interface IProps {
-  type: "";
+  width?: number;
 }
 
-const Template = () => {
+const Template = ({ width }: IProps) => {
   const dispatch = useAppDispatch();
   const globalTemplate = useAppSelector(getParams).template;
   const [localTemplate, setLocalTemplate] = useState<string>(globalTemplate);
@@ -31,8 +31,9 @@ const Template = () => {
     dispatch(setTemplate(deferredTemplate));
   }, [deferredTemplate, dispatch]);
   return (
-    <Container>
+    <Container width={width}>
       <TextField
+        sx={{ width: "100%" }}
         id="template"
         variant="standard"
         placeholder="Sentence"
@@ -54,4 +55,18 @@ const Template = () => {
 
 export default Template;
 
-const Container = styled.div``;
+interface SProps {
+  width?: number;
+}
+
+// .attrs(({ width }: SProps) => ({
+//   style: {
+//     width: width ?? "100%",
+//   },
+// }))
+const Container = styled.div<SProps>`
+  width: ${(props) => (props.width ? props.width + "px" : "100%")};
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+`;

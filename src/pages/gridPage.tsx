@@ -11,6 +11,7 @@ import { IFont } from "types/meta";
 import { TDisplayType } from "types/params";
 
 import Categories from "components/controlComponents/categories";
+import Languages from "components/controlComponents/languages";
 import Search from "components/controlComponents/search";
 import Size from "components/controlComponents/size";
 import Template from "components/controlComponents/template";
@@ -57,7 +58,6 @@ function GridPage() {
       );
 
     setFonts(_fonts);
-    console.log("render");
   }, [
     searchParams.categories,
     searchParams.language,
@@ -70,30 +70,17 @@ function GridPage() {
       <Controls>
         <div className="center-wrapper">
           <div className="row">
-            <Search />
+            <Search width={230} />
 
-            <Template />
+            <Template width={230} />
           </div>
           <div className="row">
-            <Categories />
+            <Categories width={230} />
 
             {/* style the scroll bar */}
-            <Select
-              sx={{ width: 220, height: "fit-content" }}
-              className="language-selector"
-              variant="standard"
-              value={searchParams.language}
-              onChange={(e) => dispatch(setLanguage(e.target.value))}
-              renderValue={(selected) => selected}
-            >
-              {LANGUAGES.map((_language) => (
-                <MenuItem value={_language} key={_language}>
-                  {_language}
-                </MenuItem>
-              ))}
-            </Select>
+            <Languages width={230} />
 
-            <Size size="small" defaultValue={24} max={196} width={200} />
+            <Size size="small" defaultValue={24} max={196} width={230} />
           </div>
         </div>
       </Controls>
@@ -175,6 +162,11 @@ const Controls = styled.div`
       gap: 64px;
       /* justify-content: space-between; */
       width: 100%;
+
+      @media screen and (max-width: 768px) {
+        flex-direction: column;
+        gap: 8px;
+      }
     }
 
     .size-scroll-wrapper {

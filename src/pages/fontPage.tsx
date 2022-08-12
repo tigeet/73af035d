@@ -29,7 +29,7 @@ const FontPage = () => {
         </div>
 
         <div className="controls">
-          <Template />
+          <Template width={350} />
           <Size max={196} defaultValue={24} width={350} />
         </div>
 
@@ -37,14 +37,14 @@ const FontPage = () => {
           {Object.keys(font.fonts)
             .sort((key1, key2) => parseInt(key1) - parseInt(key2))
             .map((key) => (
-              <div className="style-preview">
-                <span className="weight-display">{parseWeight(key)}</span>
+              <div className="style-preview" key={key}>
+                <span className="weight-display">{parseWeight(key).value}</span>
                 <FontPreview
-                  key={key}
                   value={template}
                   fontFamily={font.family}
                   fontSize={fontSize}
                   fontWeight={parseInt(key)}
+                  isItalic={parseWeight(key).isItalic}
                   nowrap
                 />
               </div>
@@ -67,6 +67,7 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     gap: 32px;
+    padding: 12px;
     width: 100%;
     max-width: 1400px;
   }
@@ -74,6 +75,11 @@ const Container = styled.div`
   .controls {
     display: flex;
     gap: 64px;
+
+    @media screen and (max-width: 768px) {
+      flex-direction: column;
+      gap: 8px;
+    }
   }
   .font-info {
     display: flex;
