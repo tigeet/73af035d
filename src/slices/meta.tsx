@@ -21,6 +21,7 @@ async function fetchMeta(): Promise<IMeta> {
   return {
     fonts,
     length: fonts.length,
+    isLoaded: true,
   } as IMeta;
 }
 
@@ -32,6 +33,7 @@ const metaThunk = createAsyncThunk<IMeta, undefined, {}>(
 const initialState: IMeta = {
   fonts: [],
   length: 0,
+  isLoaded: false,
 };
 
 const metaSlice = createSlice({
@@ -47,6 +49,7 @@ const metaSlice = createSlice({
         // console.log(action.payload.length);
         state.fonts = action.payload.fonts;
         state.length = action.payload.length;
+        state.isLoaded = true;
       })
       .addCase(metaThunk.rejected, (state) => {
         //

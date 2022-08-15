@@ -1,5 +1,4 @@
-import { useSelect } from "@mui/base";
-import { Input, Slider, SliderTypeMap } from "@mui/material";
+import { Input, Slider } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { useDeferredValue, useEffect, useState } from "react";
 import { getParams } from "selectors/selectors";
@@ -9,19 +8,20 @@ import styled from "styled-components";
 interface IProps {
   size?: "small" | "medium";
   defaultValue: number;
-  // min: number;
+  min: number;
   max: number;
   width?: number;
 }
 
-const Size = ({ size, defaultValue, max, width }: IProps) => {
+const Size = ({ size, defaultValue, max, min, width }: IProps) => {
   const globalFontSize = useAppSelector(getParams).fontSize;
   const dispatch = useAppDispatch();
   const [localFontSize, setlocalFontSize] = useState<number>(globalFontSize); // extract default value to global vars;
   const deferredSize: number = useDeferredValue(localFontSize);
 
   useEffect(() => {
-    dispatch(setFontSize(deferredSize));
+    if (deferredSize >= min && deferredSize <= max)
+      dispatch(setFontSize(deferredSize));
   }, [deferredSize, dispatch]);
 
   function handleInputChange(s: string, p: number): number {
@@ -51,7 +51,7 @@ const Size = ({ size, defaultValue, max, width }: IProps) => {
         size={size || "small"}
         sx={{ width: "100%", padding: 0 }}
         defaultValue={defaultValue}
-        min={0}
+        min={min}
         max={max}
         value={localFontSize}
         onChange={(_, v) => setlocalFontSize(v as number)}
@@ -83,7 +83,7 @@ const Container = styled.div<{ width?: number }>`
     }
 
     label {
-      color: #757575;
+      color: ${(props) => props.theme.colorText.light};
     }
   }
 

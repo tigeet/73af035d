@@ -22,6 +22,7 @@ interface IFont {
 interface IMeta {
   fonts: IFont[];
   length: number;
+  isLoaded: boolean;
 }
 
 // type ILoaded = boolean[];

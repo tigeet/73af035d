@@ -1,6 +1,8 @@
-import { useAppSelector } from "hooks";
+import { useAppDispatch, useAppSelector } from "hooks";
+import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import { getParams } from "selectors/selectors";
+import { getFontsMeta, getParams } from "selectors/selectors";
+import { metaThunk } from "slices/meta";
 import styled from "styled-components";
 import { IFont } from "types/meta";
 import { IParams } from "types/params";
@@ -11,8 +13,46 @@ import Template from "components/controlComponents/template";
 import FontPreview from "components/fontComponents/fontPreview";
 
 const FontPage = () => {
-  const font = useLocation().state as IFont;
+  const urlParam = useParams().font;
+  const dispatch = useAppDispatch();
+  const [isValid, setValid] = useState<boolean>(false);
+  const { fonts, isLoaded } = useAppSelector(getFontsMeta);
+  const [font, setFont] = useState<IFont>({
+    family: "",
+    subsets: [],
+    designers: [],
+    id: 0,
+    category: null,
+    fonts: {},
+    popularity: 0,
+  });
+
+  useEffect(() => {
+    if (!isLoaded) dispatch(metaThunk());
+  }, [dispatch, isLoaded]);
+
+  useEffect(() => {
+    if (isLoaded) {
+      const _fonts: IFont[] = fonts.filter(
+        (_font) => _font.family === urlParam!
+      );
+
+      if (_fonts.length !== 0) {
+        setFont(_fonts[0]);
+        setValid(true);
+      } else setValid(false);
+    }
+  }, [fonts, urlParam, isLoaded]);
+
   const { template, fontSize } = useAppSelector(getParams);
+
+  // loading page
+  if (!isLoaded) return <h1>loading</h1>;
+
+  if (!isValid) {
+    return <h1>Font doesnt exist</h1>;
+  }
+
   return (
     <Container>
       <div className="center-wrapper">
@@ -29,8 +69,8 @@ const FontPage = () => {
         </div>
 
         <div className="controls">
-          <Template width={350} />
-          <Size max={196} defaultValue={24} width={350} />
+          <Template width={250} />
+          <Size max={196} defaultValue={24} width={250} min={8} />
         </div>
 
         <div className="styles">
@@ -58,6 +98,7 @@ const FontPage = () => {
 export default FontPage;
 
 const Container = styled.div`
+  background-color: ${(props) => props.theme.colorBackground};
   display: flex;
   justify-content: center;
   width: 100%;
@@ -108,9 +149,9 @@ const Container = styled.div`
       display: flex;
       flex-direction: column;
       /* align-items: center; */
-      gap: 8px;
+      /* gap: 8px; */
       .weight-display {
-        color: #007acc;
+        /* color: #007acc; */
         font-size: 14px;
       }
     }

@@ -1,5 +1,5 @@
 import { MenuItem, Select } from "@mui/material";
-import { LANGUAGES } from "global";
+import { LANGUAGES } from "globalVars";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { getParams } from "selectors/selectors";
 import { setLanguage } from "slices/params";

@@ -2,6 +2,7 @@ type Sort = "trending" | "most Popular" | "newest" | "name";
 type TDisplayType = "grid" | "block";
 
 type TCategory =
+  | null
   | "Serif"
   | "Sans Serif"
   | "Display"

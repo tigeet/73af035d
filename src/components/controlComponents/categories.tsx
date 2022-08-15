@@ -7,7 +7,7 @@ import {
   OutlinedInput,
   Select,
 } from "@mui/material";
-import { CATEGORIES } from "global";
+import { CATEGORIES } from "globalVars";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { getParams } from "selectors/selectors";
 import { toggleCategories } from "slices/params";
@@ -42,7 +42,10 @@ const Categories = ({ width }: IProps) => {
       >
         {CATEGORIES.map((category) => (
           <MenuItem key={category} value={category}>
-            <Checkbox checked={categories.includes(category as TCategory)} />
+            <Checkbox
+              checked={categories.includes(category as TCategory)}
+              color="secondary"
+            />
             <ListItemText>{category}</ListItemText>
           </MenuItem>
         ))}

@@ -1,9 +1,9 @@
-import useFont from "fontLoader";
 import { useEffect } from "react";
 import styled from "styled-components";
 import { IFont } from "types/meta";
 import { IParams } from "types/params";
 import { designersFormatter, numberFormatter } from "utils";
+import useFont from "utils/fontLoader";
 
 import FontPreview from "./fontComponents/fontPreview";
 
@@ -51,6 +51,7 @@ const FontElement = ({
 export default FontElement;
 
 const Container = styled.div`
+  /* background-color: ${(props) => props.theme.colorBackground}; */
   display: flex;
   flex-direction: column;
   padding: 16px;
@@ -61,8 +62,8 @@ const Container = styled.div`
   height: 100%;
   width: 100%;
 
-  border: 1px solid #d6dbd958;
-
+  border: ${(props) => `1px solid ${props.theme.colorShadow}`};
+  background-color: ${(props) => props.theme.colorBackground};
   .font-info {
     display: flex;
     flex-direction: column;

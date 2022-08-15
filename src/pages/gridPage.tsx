@@ -1,5 +1,5 @@
 import { MenuItem, Pagination, Select } from "@mui/material";
-import { LANGUAGES } from "global";
+import { LANGUAGES } from "globalVars";
 import { useAppDispatch, useAppSelector } from "hooks";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -20,11 +20,11 @@ import FontElement from "../components/fontElement";
 
 function GridPage() {
   const dispatch = useAppDispatch();
-  const meta = useAppSelector(getFontsMeta);
+  const { fonts } = useAppSelector(getFontsMeta);
   const [page, setPage] = useState<number>(1);
   const PAGE_SIZE = 12;
   const searchParams = useAppSelector(getParams);
-  const [fonts, setFonts] = useState<IFont[]>([]);
+  const [loclaFonts, setFonts] = useState<IFont[]>([]);
 
   useEffect(() => {
     dispatch(metaThunk());
@@ -35,7 +35,7 @@ function GridPage() {
   }, [searchParams.categories, searchParams.language, searchParams.search]);
 
   useEffect(() => {
-    const _fonts = meta
+    const _fonts = fonts
       .filter(
         (font) =>
           font.subsets?.includes(searchParams.language) ||
@@ -62,7 +62,7 @@ function GridPage() {
     searchParams.categories,
     searchParams.language,
     searchParams.search,
-    meta,
+    fonts,
   ]);
 
   return (
@@ -80,7 +80,13 @@ function GridPage() {
             {/* style the scroll bar */}
             <Languages width={230} />
 
-            <Size size="small" defaultValue={24} max={196} width={230} />
+            <Size
+              size="small"
+              defaultValue={24}
+              max={196}
+              width={230}
+              min={8}
+            />
           </div>
         </div>
       </Controls>
@@ -88,10 +94,10 @@ function GridPage() {
       <Container>
         <div className="center-wrapper">
           <FontsGrid className="grid" display={searchParams.display}>
-            {fonts
+            {loclaFonts
               .slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
               .map((font) => (
-                <Link to={"" + font.id} key={font.id} state={font}>
+                <Link to={"" + font.family} key={font.id} state={font}>
                   <FontElement font={font} searchParams={searchParams} />
                 </Link>
               ))}
@@ -100,7 +106,7 @@ function GridPage() {
           <Pagination
             page={page}
             onChange={(_, v) => setPage(v)}
-            count={Math.ceil(fonts.length / PAGE_SIZE)}
+            count={Math.ceil(loclaFonts.length / PAGE_SIZE)}
           />
         </div>
       </Container>
@@ -127,6 +133,7 @@ const FontsGrid = styled.div<{ display: TDisplayType }>`
 `;
 
 const Container = styled.div`
+  background-color: ${(props) => props.theme.colorBackground};
   display: flex;
   width: 100%;
   height: 100%;
@@ -145,6 +152,7 @@ const Container = styled.div`
 `;
 
 const Controls = styled.div`
+  background-color: ${(props) => props.theme.colorBackground};
   justify-content: center;
   width: 100%;
   display: flex;
