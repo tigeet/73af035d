@@ -13,7 +13,7 @@ type TCategory =
 //   // [key: string]: boolean;
 // };
 
-interface IParams {
+interface IOptions {
   search: string;
   template: string;
   fontSize: number;
@@ -24,4 +24,4 @@ interface IParams {
   display: TDisplayType;
 }
 
-export type { IParams, TCategory, TDisplayType };
+export type { IOptions, TCategory, TDisplayType, Sort };

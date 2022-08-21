@@ -1,13 +1,13 @@
 import { useAppDispatch, useAppSelector } from "hooks";
 import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getFontsMeta, getParams } from "selectors/selectors";
 import { metaThunk } from "slices/meta";
 import styled from "styled-components";
 import { IFont } from "types/meta";
-import { IParams } from "types/params";
-import { parseWeight } from "utils";
+import { parseWeight } from "utils/formatters";
 
+import AdaptiveWrapper from "components/controlComponents/adaptiveWrapper";
 import Size from "components/controlComponents/size";
 import Template from "components/controlComponents/template";
 import FontPreview from "components/fontComponents/fontPreview";
@@ -69,8 +69,13 @@ const FontPage = () => {
         </div>
 
         <div className="controls">
-          <Template width={250} />
-          <Size max={196} defaultValue={24} width={250} min={8} />
+          <AdaptiveWrapper width={250}>
+            <Template />
+          </AdaptiveWrapper>
+
+          <AdaptiveWrapper width={250}>
+            <Size max={196} defaultValue={24} min={8} />
+          </AdaptiveWrapper>
         </div>
 
         <div className="styles">
@@ -99,6 +104,7 @@ export default FontPage;
 
 const Container = styled.div`
   background-color: ${(props) => props.theme.colorBackground};
+  color: ${(props) => props.theme.colorText.main};
   display: flex;
   justify-content: center;
   width: 100%;

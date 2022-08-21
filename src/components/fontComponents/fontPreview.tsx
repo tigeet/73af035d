@@ -52,7 +52,8 @@ const Container = styled.div.attrs<SProps>(
     },
   })
 )<SProps>`
-  /* background-color: ${(props) => props.theme.colorBackground}; */
+  background-color: ${(props) => props.theme.colorBackground};
+  color: ${(props) => props.theme.colorText.main};
   word-wrap: break-word;
   flex-grow: 1;
   height: 100%;

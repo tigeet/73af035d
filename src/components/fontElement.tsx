@@ -1,20 +1,14 @@
 import { useEffect } from "react";
 import styled from "styled-components";
 import { IFont } from "types/meta";
-import { IParams } from "types/params";
-import { designersFormatter, numberFormatter } from "utils";
+import { IOptions } from "types/options";
 import useFont from "utils/fontLoader";
+import { designersFormatter, numberFormatter } from "utils/formatters";
 
 import FontPreview from "./fontComponents/fontPreview";
 
 // show a link to corresponding file
-const FontElement = ({
-  font,
-  searchParams,
-}: {
-  font: IFont;
-  searchParams: IParams;
-}) => {
+const FontElement = ({ font, options }: { font: IFont; options: IOptions }) => {
   const { loadFont } = useFont();
 
   useEffect(() => {
@@ -39,8 +33,8 @@ const FontElement = ({
 
       <FontPreview
         fontFamily={font.family}
-        fontSize={searchParams.fontSize}
-        value={searchParams.template}
+        fontSize={options.fontSize}
+        value={options.template}
       />
 
       {/* <div className="tags">{tagsFormatter(font.subsets)}</div> */}
@@ -64,6 +58,7 @@ const Container = styled.div`
 
   border: ${(props) => `1px solid ${props.theme.colorShadow}`};
   background-color: ${(props) => props.theme.colorBackground};
+  color: ${(props) => props.theme.colorText.main};
   .font-info {
     display: flex;
     flex-direction: column;

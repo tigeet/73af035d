@@ -6,7 +6,7 @@ interface SCTheme {
     light: string;
     alternative: string;
   };
-
+  colorScrollbar: string;
   colorShadow: string;
 }
 

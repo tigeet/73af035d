@@ -1,8 +1,8 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "store/store";
-import { IParams, TCategory } from "types/params";
+import { IOptions, Sort, TCategory } from "types/options";
 
-const initialState: IParams = {
+const initialState: IOptions = {
   search: "",
   template: "",
   fontSize: 24,
@@ -16,13 +16,13 @@ const initialState: IParams = {
   categories: ["Serif", "Sans Serif", "Monospace", "Handwriting", "Display"],
   language: "All languages",
   onlyVariable: false,
-  sort: "trending",
+  sort: "most Popular",
   display: "grid",
 };
 
 // типизировать createSlice
-const paramsSlice = createSlice({
-  name: "params",
+const optionsSlice = createSlice({
+  name: "options",
   initialState,
   reducers: {
     // wrap dispatch in deferred value
@@ -48,6 +48,10 @@ const paramsSlice = createSlice({
     setLanguage: (state, action: PayloadAction<string>) => {
       state.language = action.payload;
     },
+
+    setSort: (state, action: PayloadAction<string>) => {
+      state.sort = action.payload as Sort;
+    },
   },
 });
 
@@ -57,5 +61,6 @@ export const {
   setFontSize,
   toggleCategories,
   setLanguage,
-} = paramsSlice.actions;
-export default paramsSlice.reducer;
+  setSort,
+} = optionsSlice.actions;
+export default optionsSlice.reducer;

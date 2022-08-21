@@ -2,7 +2,7 @@ import { Input, Slider } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { useDeferredValue, useEffect, useState } from "react";
 import { getParams } from "selectors/selectors";
-import { setFontSize } from "slices/params";
+import { setFontSize } from "slices/options";
 import styled from "styled-components";
 
 interface IProps {
@@ -10,10 +10,9 @@ interface IProps {
   defaultValue: number;
   min: number;
   max: number;
-  width?: number;
 }
 
-const Size = ({ size, defaultValue, max, min, width }: IProps) => {
+const Size = ({ size, defaultValue, max, min }: IProps) => {
   const globalFontSize = useAppSelector(getParams).fontSize;
   const dispatch = useAppDispatch();
   const [localFontSize, setlocalFontSize] = useState<number>(globalFontSize); // extract default value to global vars;
@@ -22,7 +21,7 @@ const Size = ({ size, defaultValue, max, min, width }: IProps) => {
   useEffect(() => {
     if (deferredSize >= min && deferredSize <= max)
       dispatch(setFontSize(deferredSize));
-  }, [deferredSize, dispatch]);
+  }, [deferredSize, dispatch, min, max]);
 
   function handleInputChange(s: string, p: number): number {
     let res: number = p;
@@ -34,8 +33,9 @@ const Size = ({ size, defaultValue, max, min, width }: IProps) => {
     }
     return res;
   }
+
   return (
-    <Container width={width}>
+    <Container>
       <div className="size-input">
         <Input
           id="input"
@@ -63,16 +63,12 @@ const Size = ({ size, defaultValue, max, min, width }: IProps) => {
 
 export default Size;
 
-const Container = styled.div<{ width?: number }>`
+const Container = styled.div`
   display: flex;
   align-items: center;
   height: 32px;
   /* gap: 24px; */
-  width: ${(props) => (props.width ? props.width + "px" : "100%")};
-
-  @media screen and (max-width: 768px) {
-    width: 100%;
-  }
+  width: 100%;
 
   .size-input {
     display: flex;

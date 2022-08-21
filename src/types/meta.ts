@@ -1,4 +1,4 @@
-import { TCategory } from "./params";
+import { TCategory } from "./options";
 
 interface IThickness {
   [thickness: string]: {

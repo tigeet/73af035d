@@ -198,6 +198,8 @@ const CATEGORIES = [
   "Monospace",
 ];
 
+const SORT_OPTIONS = ["name", "most Popular"];
+
 const META_URL = "https://fonts.google.com/metadata/fonts";
 
-export { LANGUAGES, CATEGORIES };
+export { LANGUAGES, CATEGORIES, SORT_OPTIONS };
