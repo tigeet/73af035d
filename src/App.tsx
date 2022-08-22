@@ -18,6 +18,7 @@ import { ThemeProvider as SCThemeProvider } from "styled-components";
 // const GridPage = React.lazy(() => import("pages/gridPage"));
 // const FontPage = React.lazy(() => import("pages/fontPage"));
 
+// extract dispatch, useSelector from  control components and pass them as props instead
 function App() {
   const { theme } = useAppSelector(getAppSettings);
 
