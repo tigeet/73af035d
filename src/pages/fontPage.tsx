@@ -1,3 +1,4 @@
+import { Button, Link } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -76,6 +77,21 @@ const FontPage = () => {
           <AdaptiveWrapper width={250}>
             <Size max={196} defaultValue={24} min={8} />
           </AdaptiveWrapper>
+
+          <AdaptiveWrapper width={128} className="download-wrapper">
+            {/* <Button> */}
+            <Link
+              // variant="h6"
+              underline="none"
+              className="download-link"
+              href={encodeURI(
+                `https://fonts.google.com/download?family=${font.family}`
+              )}
+            >
+              DOWNLOAD
+            </Link>
+            {/* </Button> */}
+          </AdaptiveWrapper>
         </div>
 
         <div className="styles">
@@ -122,10 +138,26 @@ const Container = styled.div`
   .controls {
     display: flex;
     gap: 64px;
+    width: 100%;
 
     @media screen and (max-width: 768px) {
       flex-direction: column;
       gap: 8px;
+    }
+
+    .download-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 0;
+      margin-left: auto;
+
+      .download-link {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+      }
     }
   }
   .font-info {
