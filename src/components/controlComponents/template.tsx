@@ -5,10 +5,14 @@ import { useDeferredValue, useEffect, useState } from "react";
 import { getParams } from "selectors/selectors";
 import { setTemplate } from "slices/options";
 
-const Template = () => {
-  const dispatch = useAppDispatch();
-  const globalTemplate = useAppSelector(getParams).template;
-  const [localTemplate, setLocalTemplate] = useState<string>(globalTemplate);
+interface IProps {
+  value: string;
+  onChange: Function;
+}
+const Template = ({ value, onChange }: IProps) => {
+  // const dispatch = useAppDispatch();
+  // const globalTemplate = useAppSelector(getParams).template;
+  const [localTemplate, setLocalTemplate] = useState<string>(value);
   const deferredTemplate = useDeferredValue(localTemplate);
 
   function handleReset() {
@@ -16,8 +20,9 @@ const Template = () => {
   }
 
   useEffect(() => {
-    dispatch(setTemplate(deferredTemplate));
-  }, [deferredTemplate, dispatch]);
+    onChange(deferredTemplate);
+    // dispatch(setTemplate(deferredTemplate));
+  }, [deferredTemplate, onChange]);
   return (
     <TextField
       sx={{ width: "100%" }}

@@ -1,4 +1,4 @@
-type Sort = "trending" | "most Popular" | "newest" | "name";
+type TSort = "trending" | "most Popular" | "newest" | "name";
 type TDisplayType = "grid" | "block";
 
 type TCategory =
@@ -20,8 +20,8 @@ interface IOptions {
   categories: TCategory[]; // CategoriesState, mb change to array if categories
   language: string;
   onlyVariable: boolean;
-  sort: Sort;
+  sort: TSort;
   display: TDisplayType;
 }
 
-export type { IOptions, TCategory, TDisplayType, Sort };
+export type { IOptions, TCategory, TDisplayType, TSort };

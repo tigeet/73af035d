@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "store/store";
-import { IOptions, Sort, TCategory } from "types/options";
+import { IOptions, TSort, TCategory } from "types/options";
 
 const initialState: IOptions = {
   search: "",
@@ -50,7 +50,7 @@ const optionsSlice = createSlice({
     },
 
     setSort: (state, action: PayloadAction<string>) => {
-      state.sort = action.payload as Sort;
+      state.sort = action.payload as TSort;
     },
   },
 });

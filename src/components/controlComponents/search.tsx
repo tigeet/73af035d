@@ -5,10 +5,15 @@ import { useDeferredValue, useEffect, useState } from "react";
 import { getParams } from "selectors/selectors";
 import { setSearch } from "slices/options";
 
-const Search = () => {
-  const dispatch = useAppDispatch();
-  const globalSearch = useAppSelector(getParams).search;
-  const [localSearch, setLocalSearch] = useState<string>(globalSearch);
+interface IProps {
+  value: string;
+  onChange: Function;
+}
+
+const Search = ({ value, onChange }: IProps) => {
+  // const dispatch = useAppDispatch();
+  // const globalSearch = useAppSelector(getParams).search;
+  const [localSearch, setLocalSearch] = useState<string>(value);
   const deferredSearch = useDeferredValue(localSearch);
 
   function handleReset() {
@@ -16,8 +21,9 @@ const Search = () => {
   }
 
   useEffect(() => {
-    dispatch(setSearch(deferredSearch));
-  }, [deferredSearch, dispatch]);
+    onChange(deferredSearch);
+    // dispatch(setSearch(deferredSearch));
+  }, [deferredSearch, onChange]);
   return (
     <TextField
       sx={{ width: "100%" }}

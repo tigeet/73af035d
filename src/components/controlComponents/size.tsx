@@ -6,22 +6,24 @@ import { setFontSize } from "slices/options";
 import styled from "styled-components";
 
 interface IProps {
+  value: number;
+  onChange: Function;
   size?: "small" | "medium";
   defaultValue: number;
   min: number;
   max: number;
 }
 
-const Size = ({ size, defaultValue, max, min }: IProps) => {
-  const globalFontSize = useAppSelector(getParams).fontSize;
-  const dispatch = useAppDispatch();
-  const [localFontSize, setlocalFontSize] = useState<number>(globalFontSize); // extract default value to global vars;
+const Size = ({ value, onChange, size, defaultValue, max, min }: IProps) => {
+  // const globalFontSize = useAppSelector(getParams).fontSize;
+  // const dispatch = useAppDispatch();
+  const [localFontSize, setlocalFontSize] = useState<number>(value); // extract default value to global vars;
   const deferredSize: number = useDeferredValue(localFontSize);
 
   useEffect(() => {
-    if (deferredSize >= min && deferredSize <= max)
-      dispatch(setFontSize(deferredSize));
-  }, [deferredSize, dispatch, min, max]);
+    if (deferredSize >= min && deferredSize <= max) onChange(deferredSize);
+    // dispatch(setFontSize(deferredSize));
+  }, [deferredSize, min, max, onChange]);
 
   function handleInputChange(s: string, p: number): number {
     let res: number = p;

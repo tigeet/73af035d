@@ -14,14 +14,19 @@ import { toggleCategories } from "slices/options";
 import styled from "styled-components";
 import { TCategory } from "types/options";
 
-const Categories = () => {
-  const { categories } = useAppSelector(getParams);
-  const dispatch = useAppDispatch();
+interface IProps {
+  value: TCategory[];
+  onChange: Function;
+}
+const Categories = ({ value, onChange }: IProps) => {
+  // const { categories } = useAppSelector(getParams);
+  // const dispatch = useAppDispatch();
 
   function handleChange(selected: string | TCategory[]) {
     const res: TCategory[] =
       typeof selected === "string" ? [selected as TCategory] : selected;
-    dispatch(toggleCategories(res));
+    // dispatch(toggleCategories(res));
+    onChange(res);
   }
 
   return (
@@ -29,7 +34,7 @@ const Categories = () => {
       sx={{ height: "fit-content", width: "100%" }}
       multiple
       variant="standard"
-      value={categories}
+      value={value}
       displayEmpty
       // defaultValue="empty"
       renderValue={() => "Categories"}
@@ -39,7 +44,7 @@ const Categories = () => {
         <MenuItem key={category} value={category}>
           <Checkbox
             color="primary"
-            checked={categories.includes(category as TCategory)}
+            checked={value.includes(category as TCategory)}
           />
           <ListItemText>{category}</ListItemText>
         </MenuItem>

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getFontsMeta, getParams } from "selectors/selectors";
 import { metaThunk } from "slices/meta";
+import { setFontSize, setTemplate } from "slices/options";
 import styled from "styled-components";
 import { IFont } from "types/meta";
 import { parseWeight } from "utils/formatters";
@@ -17,6 +18,7 @@ const FontPage = () => {
   const urlParam = useParams().font;
   const dispatch = useAppDispatch();
   const [isValid, setValid] = useState<boolean>(false);
+  const { template, fontSize } = useAppSelector(getParams);
   const { fonts, isLoaded } = useAppSelector(getFontsMeta);
   const [font, setFont] = useState<IFont>({
     family: "",
@@ -45,8 +47,6 @@ const FontPage = () => {
     }
   }, [fonts, urlParam, isLoaded]);
 
-  const { template, fontSize } = useAppSelector(getParams);
-
   // loading page
   if (!isLoaded) return <h1>loading</h1>;
 
@@ -71,11 +71,20 @@ const FontPage = () => {
 
         <div className="controls">
           <AdaptiveWrapper width={250}>
-            <Template />
+            <Template
+              value={template}
+              onChange={(v: string) => dispatch(setTemplate(v))}
+            />
           </AdaptiveWrapper>
 
           <AdaptiveWrapper width={250}>
-            <Size max={196} defaultValue={24} min={8} />
+            <Size
+              value={fontSize}
+              onChange={(v: number) => dispatch(setFontSize(v))}
+              max={196}
+              defaultValue={24}
+              min={8}
+            />
           </AdaptiveWrapper>
 
           <AdaptiveWrapper width={128} className="download-wrapper">

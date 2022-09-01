@@ -4,9 +4,17 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getFontsMeta, getParams } from "selectors/selectors";
 import { metaThunk } from "slices/meta";
+import {
+  setFontSize,
+  setLanguage,
+  setSearch,
+  setSort,
+  setTemplate,
+  toggleCategories,
+} from "slices/options";
 import styled from "styled-components";
 import { IFont } from "types/meta";
-import { TDisplayType } from "types/options";
+import { TCategory, TDisplayType, TSort } from "types/options";
 
 import AdaptiveWrapper from "components/controlComponents/adaptiveWrapper";
 import Categories from "components/controlComponents/categories";
@@ -80,28 +88,50 @@ function GridPage() {
         <div className="center-wrapper">
           <div className="row">
             <AdaptiveWrapper width={230}>
-              <Search />
+              <Search
+                value={options.search}
+                onChange={(v: string) => dispatch(setSearch(v))}
+              />
             </AdaptiveWrapper>
 
             <AdaptiveWrapper width={230}>
-              <Template />
+              <Template
+                value={options.template}
+                onChange={(v: string) => dispatch(setTemplate(v))}
+              />
             </AdaptiveWrapper>
           </div>
           <div className="row">
             <AdaptiveWrapper width={230}>
-              <Categories />
+              <Categories
+                value={options.categories}
+                onChange={(v: TCategory[]) => dispatch(toggleCategories(v))}
+              />
             </AdaptiveWrapper>
 
             <AdaptiveWrapper width={230}>
-              <Languages />
+              <Languages
+                value={options.language}
+                onChange={(v: string) => dispatch(setLanguage(v))}
+              />
             </AdaptiveWrapper>
 
             <AdaptiveWrapper width={230}>
-              <Size size="small" defaultValue={24} max={196} min={8} />
+              <Size
+                value={options.fontSize}
+                onChange={(v: number) => dispatch(setFontSize(v))}
+                size="small"
+                defaultValue={24}
+                max={196}
+                min={8}
+              />
             </AdaptiveWrapper>
 
             <AdaptiveWrapper className="sort" width={230}>
-              <Sort />
+              <Sort
+                value={options.sort}
+                onChange={(v: TSort) => dispatch(setSort(v))}
+              />
             </AdaptiveWrapper>
           </div>
         </div>
