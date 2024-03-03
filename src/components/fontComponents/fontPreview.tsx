@@ -21,7 +21,7 @@ const FontPreview = ({
 }: IProps) => {
   return (
     <Container
-      font={fontFamily}
+      fontFamily={fontFamily}
       fontSize={fontSize}
       fontWeight={fontWeight}
       nowrap={nowrap}
@@ -35,16 +35,16 @@ const FontPreview = ({
 export default FontPreview;
 
 interface SProps {
-  font: string;
+  fontFamily: string;
   fontSize: number;
   fontWeight?: number;
   nowrap?: boolean;
   isItalic?: boolean;
 }
 const Container = styled.div.attrs<SProps>(
-  ({ font, fontSize, fontWeight, nowrap, isItalic }: SProps) => ({
+  ({ fontFamily, fontSize, fontWeight, nowrap, isItalic }: SProps) => ({
     style: {
-      fontFamily: font,
+      fontFamily: `${fontFamily}`,
       fontSize: fontSize + "px",
       fontWeight: fontWeight ?? "normal",
       whiteSpace: nowrap ? "pre" : "unset",
@@ -59,4 +59,5 @@ const Container = styled.div.attrs<SProps>(
   height: 100%;
   width: 100%;
   overflow: hidden;
+  font-family: "${(props) => props.fontFamily}";
 `;
