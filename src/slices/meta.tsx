@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { IFont, IMeta } from "types/meta";
 
 async function fetchMeta(): Promise<IMeta> {
-  const response = await fetch(process.env.PUBLIC_URL + "fonts.json");
+  const response = await fetch(process.env.PUBLIC_URL + "/fonts.json");
   const json = await response.json();
   // destruct to proper structure
   const fonts: IFont[] = json.familyMetadataList.map((obj: any, id: number) => {
