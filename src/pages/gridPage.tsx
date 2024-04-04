@@ -37,8 +37,6 @@ function GridPage() {
 
   useEffect(() => {
     const unsub = onSnapshot(collection(db, "fonts"), () => {
-      console.log("@dispatch");
-
       dispatch(metaThunk());
     });
     return () => unsub();

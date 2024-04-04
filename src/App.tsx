@@ -10,6 +10,7 @@ import { useAppSelector } from "hooks";
 import FontPage from "pages/fontPage";
 import GridPage from "pages/gridPage";
 import Layout from "pages/layout";
+import UploadPage from "pages/uploadPage";
 import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import { getAppSettings } from "selectors/selectors";
@@ -60,6 +61,8 @@ function App() {
                   // </Suspense>
                 }
               />
+
+              <Route path="upload" element={<UploadPage />} />
             </Route>
           </Routes>
         </MuiThemeProvider>

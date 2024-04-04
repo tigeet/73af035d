@@ -18,11 +18,7 @@ const toArray = (iterable: QuerySnapshot): QueryDocumentSnapshot[] => {
   return array;
 };
 const fromRef = async (ref: any) => {
-  // console.log("@fromRef", ref, ref.path);
-  // const snap = await ref.get();
   const dc = await getDoc(ref);
-  // const snap = await doc(db, ref.path);
-  // const
   const data = dc.data() as object;
   return { id: ref.id, ...data };
 };
@@ -38,11 +34,10 @@ async function fetchMeta(): Promise<IMeta> {
     const designers = await Promise.all(
       authorsRef.map((ref: any) => fromRef(ref))
     );
-    // console.log("@snapshot", data);
-    // const designers: IAuthor[] = [];
+
     fonts.push({ id: snapshot.id, ...data, designers } as IFont);
   }
-  console.log("@fonts", fonts);
+
   return { fonts, length: fonts.length };
 }
 
@@ -62,20 +57,12 @@ const metaSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(metaThunk.pending, (state) => {
-        console.log("@pending");
-        //
-      })
+      .addCase(metaThunk.pending, (state) => {})
       .addCase(metaThunk.fulfilled, (state, action) => {
-        // console.log(action.payload.length);
         state.fonts = action.payload.fonts;
         state.length = action.payload.length;
-        console.log("@fulfilled");
       })
-      .addCase(metaThunk.rejected, (state, action) => {
-        //
-        console.log("@rejected", action);
-      });
+      .addCase(metaThunk.rejected, (state, action) => {});
   },
 });
 export { metaThunk };

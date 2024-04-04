@@ -1,0 +1,11 @@
+.suggestion {
+  padding: 4px;
+
+  &.selected {
+    background-color: rgb(41, 39, 39);
+  }
+}
+
+.create {
+  color: white;
+}

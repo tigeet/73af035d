@@ -1,0 +1,30 @@
+.option {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  padding: 4px 8.5px;
+  width: fit-content;
+  height: 32px;
+  overflow: hidden;
+
+  &.wide {
+    width: 100%;
+  }
+  .title {
+    overflow: hidden;
+    color: white;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .close-btn {
+    flex: 0 0 auto;
+    width: 12px;
+    height: 12px;
+    .close {
+      color: white;
+    }
+  }
+}
