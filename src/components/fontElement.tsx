@@ -2,18 +2,16 @@ import { useEffect } from "react";
 import styled from "styled-components";
 import { IFont } from "types/meta";
 import { IOptions } from "types/options";
-import useFont from "utils/fontLoader";
 import { designersFormatter, numberFormatter } from "utils/formatters";
 
 import FontPreview from "./fontComponents/fontPreview";
 
 // show a link to corresponding file
 const FontElement = ({ font, options }: { font: IFont; options: IOptions }) => {
-  const { loadFont } = useFont();
-
-  useEffect(() => {
-    loadFont(font.family);
-  });
+  // const { loadFont } = useFont();
+  // useEffect(() => {
+  //   loadFont(font.family);
+  // });
 
   return (
     // add a link to font page
@@ -22,12 +20,12 @@ const FontElement = ({ font, options }: { font: IFont; options: IOptions }) => {
         <div className="info-upper-line">
           <span className="font-family">{font.family}</span>
           <span className="styles-amount">
-            {numberFormatter(Object.keys(font.fonts).length)}
+            {numberFormatter(font.styles.length)}
           </span>
         </div>
 
         <span className="font-designers">
-          {designersFormatter(font.designers)}
+          {designersFormatter(font.designers.map((designer) => designer.name))}
         </span>
       </div>
 

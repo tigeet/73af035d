@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "hooks";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getFontsMeta, getParams } from "selectors/selectors";
-import { metaThunk } from "slices/meta";
+import { metaThunk } from "slices/fonts";
 import { setFontSize, setTemplate } from "slices/options";
 import styled from "styled-components";
 import { IFont } from "types/meta";
@@ -19,36 +19,30 @@ const FontPage = () => {
   const dispatch = useAppDispatch();
   const [isValid, setValid] = useState<boolean>(false);
   const { template, fontSize } = useAppSelector(getParams);
-  const { fonts, isLoaded } = useAppSelector(getFontsMeta);
+  const { fonts } = useAppSelector(getFontsMeta);
   const [font, setFont] = useState<IFont>({
     family: "",
-    subsets: [],
+    tags: [],
     designers: [],
-    id: 0,
+    id: "",
     category: null,
-    fonts: {},
+    styles: [],
     popularity: 0,
+    status: "published",
   });
 
   useEffect(() => {
-    if (!isLoaded) dispatch(metaThunk());
-  }, [dispatch, isLoaded]);
+    dispatch(metaThunk());
+  }, [dispatch]);
 
   useEffect(() => {
-    if (isLoaded) {
-      const _fonts: IFont[] = fonts.filter(
-        (_font) => _font.family === urlParam!
-      );
+    const _fonts: IFont[] = fonts.filter((_font) => _font.family === urlParam!);
 
-      if (_fonts.length !== 0) {
-        setFont(_fonts[0]);
-        setValid(true);
-      } else setValid(false);
-    }
-  }, [fonts, urlParam, isLoaded]);
-
-  // loading page
-  if (!isLoaded) return <h1>loading</h1>;
+    if (_fonts.length !== 0) {
+      setFont(_fonts[0]);
+      setValid(true);
+    } else setValid(false);
+  }, [fonts, urlParam]);
 
   if (!isValid) {
     return <h1>Font doesnt exist</h1>;
@@ -104,7 +98,7 @@ const FontPage = () => {
         </div>
 
         <div className="styles">
-          {Object.keys(font.fonts)
+          {font.styles
             .sort((key1, key2) => parseInt(key1) - parseInt(key2))
             .map((key) => (
               <div className="style-preview" key={key}>

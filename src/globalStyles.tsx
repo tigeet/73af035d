@@ -16,6 +16,11 @@ const Global = createGlobalStyle<{ theme: SCTheme }>`
       /* color: ${(props) => props.theme.colorText.main} */
     }
 
+    @font-face {
+        font-family: "JiroMonocraft";
+        src: url("https://firebasestorage.googleapis.com/v0/b/fonts-38282.appspot.com/o/Monocraft-no-ligatures.ttf?alt=media&token=01b7f66d-d5ae-49ef-82aa-05d79f4405de");
+    }
+        
     html {
       background-color: ${(props) => props.theme.colorBackground};
     }

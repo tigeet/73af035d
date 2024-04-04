@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "hooks";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getFontsMeta, getParams } from "selectors/selectors";
-import { metaThunk } from "slices/meta";
+import { metaThunk } from "slices/fonts";
 import {
   setFontSize,
   setLanguage,
@@ -34,6 +34,7 @@ function GridPage() {
   const [loclaFonts, setFonts] = useState<IFont[]>([]);
 
   useEffect(() => {
+    console.log("@dispatch");
     dispatch(metaThunk());
   }, [dispatch]);
 
@@ -45,7 +46,7 @@ function GridPage() {
     const _fonts = fonts
       .filter(
         (font) =>
-          font.subsets?.includes(options.language) ||
+          font.tags?.includes(options.language) ||
           options.language === "All languages"
       )
       .filter((font) => options.categories.includes(font.category))

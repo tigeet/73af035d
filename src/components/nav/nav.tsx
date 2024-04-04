@@ -14,7 +14,7 @@ const Nav = () => {
     <AppBar position="static">
       <Toolbar variant="dense" sx={{ justifyContent: "space-between" }}>
         <Link to="/">
-          <Typography variant="h5" sx={{ fontFamily: "Monocraft" }}>
+          <Typography variant="h5" sx={{ fontFamily: "JiroMonocraft" }}>
             FontForge
           </Typography>
         </Link>

@@ -1,30 +1,25 @@
 import { TCategory } from "./options";
 
-interface IThickness {
-  [thickness: string]: {
-    thickness: null | number;
-    slant: null | number;
-    width: null | number;
-    lineHeight: null | number;
-  };
+interface IAuthor {
+  name: string;
 }
 
 interface IFont {
-  id: number;
+  id: string;
   family: string;
-  subsets: string[];
+  tags: string[];
+  status: "pending" | "published" | "hidden" | "deleted";
   category: TCategory;
-  fonts: IThickness;
-  designers: string[];
+  styles: string[];
+  designers: IAuthor[];
   popularity: number;
 }
 
 interface IMeta {
   fonts: IFont[];
   length: number;
-  isLoaded: boolean;
 }
 
 // type ILoaded = boolean[];
 
-export type { IFont, IMeta };
+export type { IAuthor, IFont, IMeta };
