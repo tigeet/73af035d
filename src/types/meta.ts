@@ -7,6 +7,7 @@ interface IAuthor {
 interface IFont {
   id: string;
   family: string;
+  content_id: string;
   tags: string[];
   status: "pending" | "published" | "hidden" | "deleted";
   category: TCategory;

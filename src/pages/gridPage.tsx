@@ -1,4 +1,6 @@
 import { Pagination } from "@mui/material";
+import { db } from "fb";
+import { collection, onSnapshot } from "firebase/firestore";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -34,8 +36,12 @@ function GridPage() {
   const [loclaFonts, setFonts] = useState<IFont[]>([]);
 
   useEffect(() => {
-    console.log("@dispatch");
-    dispatch(metaThunk());
+    const unsub = onSnapshot(collection(db, "fonts"), () => {
+      console.log("@dispatch");
+
+      dispatch(metaThunk());
+    });
+    return () => unsub();
   }, [dispatch]);
 
   useEffect(() => {
@@ -143,7 +149,7 @@ function GridPage() {
             {loclaFonts
               .slice((page - 1) * ELEMENTS_PER_PAGE, page * ELEMENTS_PER_PAGE)
               .map((font) => (
-                <Link to={"" + font.family} key={font.id} state={font}>
+                <Link to={"font/" + font.family} key={font.id} state={font}>
                   <FontElement font={font} options={options} />
                 </Link>
               ))}

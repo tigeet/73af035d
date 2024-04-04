@@ -1,4 +1,6 @@
 import { Button, Link } from "@mui/material";
+import { cloud } from "fb";
+import { getDownloadURL, ref } from "firebase/storage";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -14,27 +16,32 @@ import Size from "components/controlComponents/size";
 import Template from "components/controlComponents/template";
 import FontPreview from "components/fontComponents/fontPreview";
 
+// https://firebasestorage.googleapis.com/v0/b/fonts-38282.appspot.com/o/fonts%2FMonocraft-no-ligatures.ttf?alt=media&token=263fb390-b217-437d-9b2e-4d1048da03ad
+// https://firebasestorage.googleapis.com/v0/b/fonts-38282.appspot.com/o/fonts%252FMonocraft-no-ligatures.ttf?alt=media&token=263fb390-b217-437d-9b2e-4d1048da03ad
+const getUrl = async (content_id: string): Promise<string> => {
+  return await getDownloadURL(ref(cloud, `fonts/${content_id}`));
+};
 const FontPage = () => {
   const urlParam = useParams().font;
   const dispatch = useAppDispatch();
   const [isValid, setValid] = useState<boolean>(false);
   const { template, fontSize } = useAppSelector(getParams);
   const { fonts } = useAppSelector(getFontsMeta);
-  const [font, setFont] = useState<IFont>({
-    family: "",
-    tags: [],
-    designers: [],
-    id: "",
-    category: null,
-    styles: [],
-    popularity: 0,
-    status: "published",
-  });
+  const [font, setFont] = useState<IFont | null>(null);
 
   useEffect(() => {
     dispatch(metaThunk());
   }, [dispatch]);
 
+  const [url, setUrl] = useState("");
+  useEffect(() => {
+    async function run() {
+      if (!font) return;
+      setUrl(await getUrl(font?.content_id));
+    }
+
+    run();
+  });
   useEffect(() => {
     const _fonts: IFont[] = fonts.filter((_font) => _font.family === urlParam!);
 
@@ -48,6 +55,7 @@ const FontPage = () => {
     return <h1>Font doesnt exist</h1>;
   }
 
+  if (!font) return null;
   return (
     <Container>
       <div className="center-wrapper">
@@ -56,9 +64,9 @@ const FontPage = () => {
         <div className="font-info">
           <span className="font-title">{font.family}</span>
           <span className="font-designers">
-            by{" "}
+            by
             <span className="selected font-designers">
-              {font.designers.join(", ")}
+              {font.designers.map((designer) => designer.name).join(", ")}
             </span>
           </span>
         </div>
@@ -87,9 +95,10 @@ const FontPage = () => {
               // variant="h6"
               underline="none"
               className="download-link"
-              href={encodeURI(
-                `https://fonts.google.com/download?family=${font.family}`
-              )}
+              href={
+                url
+                // `https://fonts.google.com/download?family=${font.family}`
+              }
             >
               DOWNLOAD
             </Link>
@@ -98,21 +107,19 @@ const FontPage = () => {
         </div>
 
         <div className="styles">
-          {font.styles
-            .sort((key1, key2) => parseInt(key1) - parseInt(key2))
-            .map((key) => (
-              <div className="style-preview" key={key}>
-                <span className="weight-display">{parseWeight(key).value}</span>
-                <FontPreview
-                  value={template}
-                  fontFamily={font.family}
-                  fontSize={fontSize}
-                  fontWeight={parseInt(key)}
-                  isItalic={parseWeight(key).isItalic}
-                  nowrap
-                />
-              </div>
-            ))}
+          {font.styles.toSorted().map((key) => (
+            <div className="style-preview" key={key}>
+              <span className="weight-display">{parseWeight(key).value}</span>
+              <FontPreview
+                value={template}
+                fontFamily={font.family}
+                fontSize={fontSize}
+                fontWeight={parseInt(key)}
+                isItalic={parseWeight(key).isItalic}
+                nowrap
+              />
+            </div>
+          ))}
         </div>
       </div>
     </Container>

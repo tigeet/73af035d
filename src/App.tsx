@@ -53,7 +53,7 @@ function App() {
                 }
               />
               <Route
-                path=":font"
+                path="font/:font"
                 element={
                   // <Suspense>
                   <FontPage />
