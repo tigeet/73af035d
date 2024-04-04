@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "store/store";
-import { IOptions, TSort, TCategory } from "types/options";
+import { IOptions, TCategory, TSort } from "types/options";
 
 const initialState: IOptions = {
   search: "",
@@ -16,7 +16,7 @@ const initialState: IOptions = {
   categories: ["Serif", "Sans Serif", "Monospace", "Handwriting", "Display"],
   language: "All languages",
   onlyVariable: false,
-  sort: "most Popular",
+  sort: "most popular",
   display: "grid",
 };
 

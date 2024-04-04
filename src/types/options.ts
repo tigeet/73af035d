@@ -1,4 +1,4 @@
-type TSort = "trending" | "most Popular" | "newest" | "name";
+type TSort = "trending" | "most popular" | "newest" | "name";
 type TDisplayType = "grid" | "block";
 
 type TCategory =

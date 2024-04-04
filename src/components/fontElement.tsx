@@ -56,6 +56,9 @@ const Container = styled.div`
   height: 100%;
   width: 100%;
 
+  .font-family {
+    font-size: 20px;
+  }
   border: ${(props) => `1px solid ${props.theme.colorShadow}`};
   background-color: ${(props) => props.theme.colorBackground};
   color: ${(props) => props.theme.colorText.main};

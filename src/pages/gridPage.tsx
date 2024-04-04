@@ -23,8 +23,7 @@ import Search from "components/controlComponents/search";
 import Size from "components/controlComponents/size";
 import Sort from "components/controlComponents/sort";
 import Template from "components/controlComponents/template";
-
-import FontElement from "../components/fontElement";
+import FontElement from "components/fontElement";
 
 function GridPage() {
   const dispatch = useAppDispatch();
@@ -54,20 +53,20 @@ function GridPage() {
         (font) =>
           font.family
             .toLocaleLowerCase()
-            .includes(options.search.toLocaleLowerCase()) ||
-          font.designers.reduce(
-            (x, y) =>
-              x ||
-              y
-                .toLocaleLowerCase()
-                .includes(options.search.toLocaleLowerCase()),
-            false
-          )
+            .includes(options.search.toLocaleLowerCase())
+        // || font.designers.reduce(
+        //   (x, y) =>
+        //     x ||
+        //     y
+        //       .toLocaleLowerCase()
+        //       .includes(options.search.toLocaleLowerCase()),
+        //   false
+        // )
       )
       .sort((f1, f2) => {
         if (options.sort === "name") return f1.family.localeCompare(f2.family)!;
 
-        if (options.sort === "most Popular")
+        if (options.sort === "most popular")
           return f1.popularity - f2.popularity;
 
         return 0;

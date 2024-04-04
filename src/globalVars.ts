@@ -198,7 +198,7 @@ const CATEGORIES = [
   "Monospace",
 ];
 
-const SORT_OPTIONS = ["name", "most Popular"];
+const SORT_OPTIONS = ["name", "most popular"];
 
 const META_URL = "https://fonts.google.com/metadata/fonts";
 

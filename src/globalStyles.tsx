@@ -12,6 +12,7 @@ const Global = createGlobalStyle<{ theme: SCTheme }>`
       box-sizing: border-box;
       text-decoration: none;
 
+
       /* color: ${(props) => props.theme.colorText.main} */
     }
 
@@ -66,7 +67,7 @@ const MuiDarkTheme = createTheme({
     secondary: { main: SCDarkTheme.colorPrimary },
   },
 
-  components: {}
+  components: {},
 });
 
 const SCLightTheme: SCTheme = {
