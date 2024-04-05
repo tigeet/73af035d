@@ -9,7 +9,7 @@ import {
   TextField,
 } from "@mui/material";
 import { cloud, db } from "fb";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc } from "firebase/firestore";
 import { ref, uploadBytes } from "firebase/storage";
 import { memo, useCallback, useEffect, useState } from "react";
 import X from "static/x.svg";
@@ -79,7 +79,8 @@ const UploadPage = () => {
       category: data.category,
       content_id: data.content.name,
       designers:
-        data.designers?.map((designer) => `/authors/${designer}`) ?? [],
+        data.designers?.map((designer) => doc(db, `/authors/${designer}`)) ??
+        [],
       family: data.family,
       popularity: Math.floor(Math.random() * 10000),
       status: "pending",
