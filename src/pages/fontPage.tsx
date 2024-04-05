@@ -116,6 +116,7 @@ const FontPage = () => {
                 fontSize={fontSize}
                 fontWeight={parseInt(key)}
                 isItalic={parseWeight(key).isItalic}
+                fontContent={font.content_id}
                 nowrap
               />
             </div>

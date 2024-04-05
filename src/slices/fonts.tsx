@@ -61,8 +61,11 @@ const metaSlice = createSlice({
       .addCase(metaThunk.fulfilled, (state, action) => {
         state.fonts = action.payload.fonts;
         state.length = action.payload.length;
+        console.log("@fulfilled", action);
       })
-      .addCase(metaThunk.rejected, (state, action) => {});
+      .addCase(metaThunk.rejected, (state, action) => {
+        console.log("@rejected", action);
+      });
   },
 });
 export { metaThunk };

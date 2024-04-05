@@ -16,6 +16,8 @@ import { Route, Routes } from "react-router-dom";
 import { getAppSettings } from "selectors/selectors";
 import { ThemeProvider as SCThemeProvider } from "styled-components";
 
+import FontLoader from "components/fontLoader";
+
 // const GridPage = React.lazy(() => import("pages/gridPage"));
 // const FontPage = React.lazy(() => import("pages/fontPage"));
 
@@ -42,7 +44,7 @@ function App() {
         <MuiThemeProvider theme={muiTheme}>
           <CssBaseline />
           <Global />
-
+          <FontLoader />
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route

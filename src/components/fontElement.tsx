@@ -32,6 +32,7 @@ const FontElement = ({ font, options }: { font: IFont; options: IOptions }) => {
       <FontPreview
         fontFamily={font.family}
         fontSize={options.fontSize}
+        fontContent={font.content_id}
         value={options.template}
       />
 

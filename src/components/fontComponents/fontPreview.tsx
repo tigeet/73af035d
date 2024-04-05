@@ -1,4 +1,5 @@
 import { fontWeight } from "@mui/system";
+import useFont from "hooks/useFont";
 import styled from "styled-components";
 
 interface IProps {
@@ -9,6 +10,7 @@ interface IProps {
   fontWeight?: number;
   nowrap?: boolean;
   isItalic?: boolean;
+  fontContent: string;
 }
 
 const FontPreview = ({
@@ -17,8 +19,10 @@ const FontPreview = ({
   fontSize,
   fontWeight,
   nowrap,
+  fontContent,
   isItalic,
 }: IProps) => {
+  useFont({ name: fontFamily, content_id: fontContent });
   return (
     <Container
       font={fontFamily}
