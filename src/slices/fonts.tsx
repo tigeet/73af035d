@@ -10,7 +10,7 @@ import {
   getDocs,
   query,
 } from "firebase/firestore";
-import { IAuthor, IFont, IMeta } from "types/meta";
+import { IFont, IMeta, IUser } from "types/meta";
 
 const toArray = (iterable: QuerySnapshot): QueryDocumentSnapshot[] => {
   const array: QueryDocumentSnapshot[] = [];
@@ -61,11 +61,8 @@ const metaSlice = createSlice({
       .addCase(metaThunk.fulfilled, (state, action) => {
         state.fonts = action.payload.fonts;
         state.length = action.payload.length;
-        console.log("@fulfilled", action);
       })
-      .addCase(metaThunk.rejected, (state, action) => {
-        console.log("@rejected", action);
-      });
+      .addCase(metaThunk.rejected, (state, action) => {});
   },
 });
 export { metaThunk };

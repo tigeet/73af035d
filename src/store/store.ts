@@ -3,12 +3,14 @@ import metaReducer from "slices/fonts";
 import loadReducer from "slices/load";
 import paramsReducer from "slices/options";
 import settingsReducer from "slices/settings";
+import userReducer from "slices/user";
 
 const rootReducer = combineReducers({
   meta: metaReducer,
   options: paramsReducer,
   settings: settingsReducer,
   load: loadReducer,
+  user: userReducer,
 });
 
 const store = configureStore({

@@ -1,5 +1,6 @@
 import { Pagination } from "@mui/material";
-import { db } from "fb";
+import { auth, db } from "fb";
+import { onAuthStateChanged } from "firebase/auth";
 import { collection, onSnapshot } from "firebase/firestore";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { useEffect, useState } from "react";
@@ -14,6 +15,7 @@ import {
   setTemplate,
   toggleCategories,
 } from "slices/options";
+import { userThunk } from "slices/user";
 import styled from "styled-components";
 import { IFont } from "types/meta";
 import { TCategory, TDisplayType, TSort } from "types/options";
@@ -35,13 +37,7 @@ function GridPage() {
   const options = useAppSelector(getParams);
   const [loclaFonts, setFonts] = useState<IFont[]>([]);
 
-  useEffect(() => {
-    const unsub = onSnapshot(collection(db, "fonts"), () => {
-      dispatch(metaThunk());
-    });
-    return () => unsub();
-  }, [dispatch]);
-
+ 
   useEffect(() => {
     setPage(1);
   }, [options.categories, options.language, options.search]);

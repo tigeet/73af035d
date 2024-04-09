@@ -13,7 +13,7 @@ const FontLoader = () => {
   return ReactDOM.createPortal(
     <>
       {used.map((font) => (
-        <style>{`
+        <style key={font.name}>{`
         @font-face {
           font-family: '${font.name}';
           src: url(${font.url});

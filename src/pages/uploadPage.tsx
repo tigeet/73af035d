@@ -11,7 +11,9 @@ import {
 import { cloud, db } from "fb";
 import { addDoc, collection, doc } from "firebase/firestore";
 import { ref, uploadBytes } from "firebase/storage";
+import { useAppSelector } from "hooks";
 import { memo, useCallback, useEffect, useState } from "react";
+import { getUser } from "selectors/selectors";
 import X from "static/x.svg";
 import styled from "styled-components";
 import { IFont } from "types/meta";
@@ -30,14 +32,14 @@ type IFontDto = {
 };
 const UploadPage = () => {
   const [tagOptions, setTagOptions] = useState(["cyrillic", "latin"]);
+  const user = useAppSelector(getUser);
   const [data, setData] = useState<Partial<IFontDto>>({
     family: "",
     category: "Sans Serif",
     tags: [],
     styles: [],
-    designers: ["41jOnoAT2491l1Sxbn3J"],
+    designers: [user?.id],
   });
-
   const setFamily = (family: string) =>
     setData((data) => ({ ...data, family }));
 
@@ -66,6 +68,8 @@ const UploadPage = () => {
   const handleSubmit = useCallback(async () => {
     if (data.content === undefined) return;
     if (data.family === undefined) return;
+    console.log("@submit", user, data);
+    if (!user) return;
 
     const snapshot = await uploadBytes(
       ref(cloud, `fonts/${data.content.name}`),
@@ -79,27 +83,18 @@ const UploadPage = () => {
       category: data.category,
       content_id: data.content.name,
       designers:
-        data.designers?.map((designer) => doc(db, `/authors/${designer}`)) ??
-        [],
+        data.designers?.map((designer) => doc(db, `/users/${designer}`)) ?? [],
       family: data.family,
       popularity: Math.floor(Math.random() * 10000),
       status: "pending",
       styles: data.styles,
       tags: data.tags,
     });
-  }, [
-    data.category,
-    data.content,
-    data.designers,
-    data.family,
-    data.styles,
-    data.tags,
-  ]);
+  }, [data, user]);
 
   const handleSetCategory = (category: TCategory) =>
     setData((data) => ({ ...data, category }));
 
-  useEffect(() => console.log(data));
   return (
     <Container>
       <div className="center-wrapper">

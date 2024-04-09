@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
+import { GoogleAuthProvider, getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
@@ -24,3 +25,8 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 export const db = getFirestore(app);
 export const cloud = getStorage(app);
+
+export const provider = new GoogleAuthProvider();
+export const auth = getAuth();
+provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
+auth.useDeviceLanguage();

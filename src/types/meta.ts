@@ -1,7 +1,10 @@
 import { TCategory } from "./options";
 
-interface IAuthor {
+interface IUser {
+  id: string;
   name: string;
+  auth: string;
+  role: "author" | "admin" | "user";
 }
 
 interface IFont {
@@ -12,7 +15,7 @@ interface IFont {
   status: "pending" | "published" | "hidden" | "deleted";
   category: TCategory;
   styles: string[];
-  designers: IAuthor[];
+  designers: IUser[];
   popularity: number;
 }
 
@@ -23,4 +26,4 @@ interface IMeta {
 
 // type ILoaded = boolean[];
 
-export type { IAuthor, IFont, IMeta };
+export type { IUser, IFont, IMeta };

@@ -1,4 +1,7 @@
 import { CssBaseline, ThemeProvider as MuiThemeProvider } from "@mui/material";
+import { auth, db } from "fb";
+import { onAuthStateChanged } from "firebase/auth";
+import { collection, onSnapshot } from "firebase/firestore";
 import {
   Global,
   MuiDarkTheme,
@@ -6,14 +9,16 @@ import {
   SCDarkTheme,
   SCLightTheme,
 } from "globalStyles";
-import { useAppSelector } from "hooks";
+import { useAppDispatch, useAppSelector } from "hooks";
 import FontPage from "pages/fontPage";
 import GridPage from "pages/gridPage";
 import Layout from "pages/layout";
 import UploadPage from "pages/uploadPage";
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
-import { getAppSettings } from "selectors/selectors";
+import { getAppSettings, getUser } from "selectors/selectors";
+import { metaThunk } from "slices/fonts";
+import { userThunk } from "slices/user";
 import { ThemeProvider as SCThemeProvider } from "styled-components";
 
 import FontLoader from "components/fontLoader";
@@ -24,6 +29,21 @@ import FontLoader from "components/fontLoader";
 // extract dispatch, useSelector from  control components and pass them as props instead
 function App() {
   const { theme } = useAppSelector(getAppSettings);
+  const user = useAppSelector(getUser);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    const unsub = onSnapshot(collection(db, "fonts"), () => {
+      dispatch(metaThunk());
+    });
+    return () => unsub();
+  }, [dispatch]);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      console.log("@onStateChange", user);
+      dispatch(userThunk());
+    });
+  }, [dispatch]);
 
   let scTheme = SCLightTheme;
   let muiTheme = MuiLightTheme;
@@ -64,7 +84,10 @@ function App() {
                 }
               />
 
-              <Route path="upload" element={<UploadPage />} />
+              <Route
+                path="upload"
+                element={<UploadPage key={user?.id ?? ""} />}
+              />
             </Route>
           </Routes>
         </MuiThemeProvider>

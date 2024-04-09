@@ -20,14 +20,12 @@ const loadSlice = createSlice({
   initialState,
   reducers: {
     use: (state, action: PayloadAction<ILoadedFont>) => {
-      console.log("@use", action.payload);
       if (used.has(action.payload.name)) return;
       used.add(action.payload.name);
       state.used = [...state.used, action.payload];
     },
 
     del: (state, action: PayloadAction<string>) => {
-      console.log("@del", action.payload);
       if (!used.has(action.payload)) return;
       used.delete(action.payload);
       state.used = state.used.filter((font) => font.name !== action.payload);
