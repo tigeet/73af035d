@@ -46,7 +46,6 @@ const metaSlice = createSlice({
         //
       })
       .addCase(metaThunk.fulfilled, (state, action) => {
-        // console.log(action.payload.length);
         state.fonts = action.payload.fonts;
         state.length = action.payload.length;
         state.isLoaded = true;

@@ -1,6 +1,6 @@
 import { Button, Link } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "hooks";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getFontsMeta, getParams } from "selectors/selectors";
 import { metaThunk } from "slices/meta";
@@ -19,6 +19,7 @@ const FontPage = () => {
   const dispatch = useAppDispatch();
   const [isValid, setValid] = useState<boolean>(false);
   const { template, fontSize } = useAppSelector(getParams);
+
   const { fonts, isLoaded } = useAppSelector(getFontsMeta);
   const [font, setFont] = useState<IFont>({
     family: "",
@@ -29,7 +30,11 @@ const FontPage = () => {
     fonts: {},
     popularity: 0,
   });
-
+  useEffect(() => console.log("font page mount"), []);
+  const handleSetTemplate = useCallback(
+    (v: string) => dispatch(setTemplate(v)),
+    [dispatch]
+  );
   useEffect(() => {
     if (!isLoaded) dispatch(metaThunk());
   }, [dispatch, isLoaded]);
@@ -47,7 +52,6 @@ const FontPage = () => {
     }
   }, [fonts, urlParam, isLoaded]);
 
-  // loading page
   if (!isLoaded) return <h1>loading</h1>;
 
   if (!isValid) {
@@ -71,10 +75,7 @@ const FontPage = () => {
 
         <div className="controls">
           <AdaptiveWrapper width={250}>
-            <Template
-              value={template}
-              onChange={(v: string) => dispatch(setTemplate(v))}
-            />
+            <Template value={template} onChange={handleSetTemplate} />
           </AdaptiveWrapper>
 
           <AdaptiveWrapper width={250}>

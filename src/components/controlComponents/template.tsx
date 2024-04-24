@@ -1,27 +1,27 @@
 import { Close } from "@mui/icons-material";
 import { IconButton, InputAdornment, TextField } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "hooks";
-import { useDeferredValue, useEffect, useState } from "react";
-import { getParams } from "selectors/selectors";
-import { setTemplate } from "slices/options";
+import {
+  memo,
+  useCallback,
+  useDeferredValue,
+  useEffect,
+  useState,
+} from "react";
 
 interface IProps {
   value: string;
   onChange: Function;
 }
 const Template = ({ value, onChange }: IProps) => {
-  // const dispatch = useAppDispatch();
-  // const globalTemplate = useAppSelector(getParams).template;
   const [localTemplate, setLocalTemplate] = useState<string>(value);
   const deferredTemplate = useDeferredValue(localTemplate);
 
-  function handleReset() {
+  const handleReset = useCallback(() => {
     setLocalTemplate("");
-  }
+  }, []);
 
   useEffect(() => {
     onChange(deferredTemplate);
-    // dispatch(setTemplate(deferredTemplate));
   }, [deferredTemplate, onChange]);
   return (
     <TextField
@@ -29,7 +29,7 @@ const Template = ({ value, onChange }: IProps) => {
       id="template"
       variant="standard"
       placeholder="Sentence"
-      value={deferredTemplate}
+      value={localTemplate}
       onChange={(e) => setLocalTemplate(e.target.value)}
       InputProps={{
         endAdornment: (
@@ -44,4 +44,4 @@ const Template = ({ value, onChange }: IProps) => {
   );
 };
 
-export default Template;
+export default memo(Template);

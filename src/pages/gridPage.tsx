@@ -1,6 +1,6 @@
 import { Pagination } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "hooks";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getFontsMeta, getParams } from "selectors/selectors";
 import { metaThunk } from "slices/meta";
@@ -82,6 +82,10 @@ function GridPage() {
     options.sort,
   ]);
 
+  const handleSetTemplate = useCallback(
+    (v: string) => dispatch(setTemplate(v)),
+    [dispatch]
+  );
   return (
     <>
       <Controls>
@@ -95,10 +99,7 @@ function GridPage() {
             </AdaptiveWrapper>
 
             <AdaptiveWrapper width={230}>
-              <Template
-                value={options.template}
-                onChange={(v: string) => dispatch(setTemplate(v))}
-              />
+              <Template value={options.template} onChange={handleSetTemplate} />
             </AdaptiveWrapper>
           </div>
           <div className="row">
