@@ -4,7 +4,14 @@ import { createGlobalStyle } from "styled-components";
 import { SCTheme } from "types/styles";
 
 const Global = createGlobalStyle<{ theme: SCTheme }>`
-    * {
+@font-face {
+    font-family: 'Monocraft';
+    src: url('fonts/Monocraft-no-ligatures.ttf');
+    font-weight: normal;
+    font-style: normal;
+}    
+
+* {
       margin: 0;
       padding: 0;
       font-size: 16px;
@@ -66,7 +73,7 @@ const MuiDarkTheme = createTheme({
     secondary: { main: SCDarkTheme.colorPrimary },
   },
 
-  components: {}
+  components: {},
 });
 
 const SCLightTheme: SCTheme = {
