@@ -1,4 +1,5 @@
-import { Pagination } from "@mui/material";
+import { Add } from "@mui/icons-material";
+import { Box, Fab, Pagination } from "@mui/material";
 import { auth, db } from "fb";
 import { onAuthStateChanged } from "firebase/auth";
 import { collection, onSnapshot } from "firebase/firestore";
@@ -37,13 +38,13 @@ function GridPage() {
   const options = useAppSelector(getParams);
   const [loclaFonts, setFonts] = useState<IFont[]>([]);
 
- 
   useEffect(() => {
     setPage(1);
   }, [options.categories, options.language, options.search]);
 
   useEffect(() => {
     const _fonts = fonts
+      .filter((font) => font.status === "published")
       .filter(
         (font) =>
           font.tags?.includes(options.language) ||
@@ -83,7 +84,7 @@ function GridPage() {
   ]);
 
   return (
-    <>
+    <Box sx={{ flex: "1 1 auto", display: "flex", flexDirection: "column" }}>
       <Controls>
         <div className="center-wrapper">
           <div className="row">
@@ -157,7 +158,20 @@ function GridPage() {
           />
         </div>
       </Container>
-    </>
+
+      <Link
+        to="/upload"
+        style={{
+          position: "absolute",
+          right: "16px",
+          bottom: "16px",
+        }}
+      >
+        <Fab aria-label="Upload">
+          <Add />
+        </Fab>
+      </Link>
+    </Box>
   );
 }
 
@@ -189,12 +203,12 @@ const Container = styled.div`
   .center-wrapper {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
     gap: 12px;
     padding: 12px;
     width: 100%;
     max-width: 1400px;
-    height: 100%;
   }
 `;
 

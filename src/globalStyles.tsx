@@ -8,6 +8,7 @@ const Global = createGlobalStyle<{ theme: SCTheme }>`
   margin: 0px;
   border: none;
   padding: 0px;
+  box-sizing: border-box;
 }
 
 *,

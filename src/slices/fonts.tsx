@@ -37,7 +37,7 @@ async function fetchMeta(): Promise<IMeta> {
 
     fonts.push({ id: snapshot.id, ...data, designers } as IFont);
   }
-
+  console.log("@fetch fonts", fonts);
   return { fonts, length: fonts.length };
 }
 

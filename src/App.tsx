@@ -10,6 +10,7 @@ import {
   SCLightTheme,
 } from "globalStyles";
 import { useAppDispatch, useAppSelector } from "hooks";
+import AdminPage from "pages/adminPage";
 import FontPage from "pages/fontPage";
 import GridPage from "pages/gridPage";
 import Layout from "pages/layout";
@@ -40,7 +41,6 @@ function App() {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      console.log("@onStateChange", user);
       dispatch(userThunk());
     });
   }, [dispatch]);
@@ -87,6 +87,10 @@ function App() {
               <Route
                 path="upload"
                 element={<UploadPage key={user?.id ?? ""} />}
+              />
+              <Route
+                path="admin"
+                element={<AdminPage key={user?.id ?? ""} />}
               />
             </Route>
           </Routes>

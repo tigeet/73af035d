@@ -8,6 +8,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getAppSettings, getUser } from "selectors/selectors";
 import { toggleTheme } from "slices/settings";
+import { logout } from "slices/user";
 import styled from "styled-components";
 
 const Nav = () => {
@@ -21,10 +22,11 @@ const Nav = () => {
   }, []);
 
   const onLogoutClick = useCallback(() => {
+    dispatch(logout());
     signOut(auth);
-  }, []);
+  }, [dispatch]);
   return (
-    <AppBar position="static">
+    <AppBar position="sticky">
       <Toolbar variant="dense" sx={{ justifyContent: "space-between" }}>
         <Container>
           <Link to="/">
@@ -45,7 +47,9 @@ const Nav = () => {
 
             {user ? (
               <div className="profile">
-                <span className="username">{user.name}</span>
+                <span className="username" style={{ fontFamily: "Monocraft" }}>
+                  {user.name}
+                </span>
                 <IconButton onClick={onLogoutClick}>
                   <Logout color="info" />
                 </IconButton>

@@ -1,8 +1,10 @@
-import { Button, Link } from "@mui/material";
+import { Add } from "@mui/icons-material";
+import { Button, Fab, Link } from "@mui/material";
 import { cloud } from "fb";
 import { getDownloadURL, ref } from "firebase/storage";
 import { useAppDispatch, useAppSelector } from "hooks";
 import { useEffect, useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { getFontsMeta, getParams } from "selectors/selectors";
 import { metaThunk } from "slices/fonts";
@@ -123,6 +125,19 @@ const FontPage = () => {
           ))}
         </div>
       </div>
+
+      <RouterLink
+        to="/upload"
+        style={{
+          position: "absolute",
+          right: "16px",
+          bottom: "16px",
+        }}
+      >
+        <Fab aria-label="Upload">
+          <Add />
+        </Fab>
+      </RouterLink>
     </Container>
   );
 };
